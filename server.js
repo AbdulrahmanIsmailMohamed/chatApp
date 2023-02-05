@@ -4,21 +4,24 @@ const socketio = require("socket.io");
 const app = express();
 const server = http.createServer(app)
 const io = socketio(server)
+const formatMessage = require("./util/messages")
 
 // Set static folder
 app.use(express.static("public"))
 
+const botName = "ChatCard Bot";
+
 io.on("connection", socket => {
-    socket.emit("message", "Welcom to chat card !!");
+    socket.emit("message", formatMessage(botName, "Welcom to chat card !!"));
     // broadcast when a user connected
-    socket.broadcast.emit("message", "the user has joined the chat");
+    socket.broadcast.emit("message", formatMessage(botName, "the user has joined the chat"));
     // run when client disconnect
     socket.on("disconnect", () => {
-        io.emit("message", "A user has left the chat")
+        io.emit("message", formatMessage(botName, "A user has left the chat"))
     })
     // listen for a new message
     socket.on("chatMessage", (msg) => {
-        io.emit("message", msg)
+        io.emit("message", formatMessage(botName, msg))
     })
 })
 
