@@ -1,6 +1,5 @@
-# ChatCord App
+# chatApp
 Realtime chat app with websockets using Node.js, Express and Socket.io on the frontend with a custom UI
-
 ## Usage
 ```
 npm install
