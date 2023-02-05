@@ -4,6 +4,7 @@ const socketio = require("socket.io");
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
+
 const formatMessage = require("./util/messages");
 const { getCurrentUser, userJoin } = require("./util/user");
 
@@ -25,7 +26,7 @@ io.on("connection", (socket) => {
         socket.on("chatMessage", (msg) => {
             io.to(user.room).emit("message", formatMessage(user.username, msg));
         });
-        
+
         // run when client disconnect
         socket.on("disconnect", () => {
             io.to(user.room).emit("message", formatMessage(botName, "A user has left the chat"))
