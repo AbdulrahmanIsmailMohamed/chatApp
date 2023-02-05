@@ -5,11 +5,14 @@ const chatMessage = document.querySelector(".chat-messages")
 const { username, room } = Qs.parse(location.search, {
     ignoreQueryPrefix: true
 })
-console.log(username, room);
 
 
 const socket = io();
 
+// join chatroom
+socket.emit("joinRoom", { username, room })
+
+// message from server
 socket.on("message", message => {
     console.log(message);
     outputMessage(message)
@@ -24,7 +27,7 @@ chatForm.addEventListener("submit", (e) => {
 
     // get message text 
     const msg = e.target.elements.msg.value;
-
+    console.log(msg);
     // emit message to server
     socket.emit("chatMessage", msg)
 
