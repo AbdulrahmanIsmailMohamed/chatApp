@@ -5,6 +5,7 @@ const socket = io();
 socket.on("message", message => {
     console.log(message);
     outputMessage(message)
+
     // scroll down
     chatMessage.scrollTop = chatMessage.scrollHeight;
 });
@@ -12,10 +13,16 @@ socket.on("message", message => {
 // message submit
 chatForm.addEventListener("submit", (e) => {
     e.preventDefault();
+
     // get message text 
     const msg = e.target.elements.msg.value;
+
     // emit message to server
     socket.emit("chatMessage", msg)
+
+    // clear input
+    e.target.elements.msg.value = "";
+    e.target.elements.msg.focus();
 });
 
 // output message to dom
